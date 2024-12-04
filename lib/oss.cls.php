@@ -17,8 +17,8 @@ class oss
 
 	public function upload($filepath)
     {
-        $accessKeyId = "LTAI1gDYPJhtZlIh";
-        $accessKeySecret = "bmLtFONC9OVSfS9NAWYtelVsWMzCEp";
+        $accessKeyId = "";
+        $accessKeySecret = "";
         $endpoint = "http://oss-cn-beijing.aliyuncs.com";
         $bucket= "ossforphpems";
         $object = date('Ymd').'/'.basename($filepath);
