@@ -59,11 +59,10 @@
 						        <div class="fineuploader" attr-type="thumb" attr-template="pe-template-csthumb"></div>
 							</div>
 				        </div>
-						<!--
 				        <div class="form-group">
 				            <label for="contentcatid" class="control-label col-sm-2">科目：</label>
 				        	<div class="col-sm-9 form-inline">
-							    <select id="cscatid" msg="请选择科目" needle="needle" target="csbasicid" class="combox form-control" name="args[cssubjectid]" refUrl="index.php?course-master-index-getajaxbasiclist&subjectid={value}">
+							    <select id="cscatid" msg="请选择科目" needle="needle" class="form-control" name="args[cssubjectid]">
 					            	<option value="">请选择科目</option>
 					            	{x2;tree:$subjects,subject,sid}
 					            	<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $course['cssubjectid']} selected{x2;endif}>{x2;v:subject['subject']}</option>
@@ -72,15 +71,6 @@
 					            <a href="index.php?exam-master-basic-subject" class="btn btn-primary" target="_blank">编辑科目</a>
 					        </div>
 				        </div>
-				        <div class="form-group">
-				            <label for="contentcatid" class="control-label col-sm-2">对应考场：</label>
-				        	<div class="col-sm-9 form-inline">
-							    <select id="csbasicid" msg="您必须选择一个考场" autoload="index.php?course-master-index-getajaxbasiclist&subjectid={x2;$course['cssubjectid']}" class="autoloaditem form-control" needle="needle" current="{x2;$course['csbasicid']}" class="form-control" name="args[csbasicid]">
-					            	<option value="">请选择科目后再选择考场</option>
-					            </select>
-					        </div>
-				        </div>
-						-->
 				        <div class="form-group">
 				            <label for="contentdescribe" class="control-label col-sm-2">简介：</label>
 				            <div class="col-sm-9">

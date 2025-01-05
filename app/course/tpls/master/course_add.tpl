@@ -73,7 +73,7 @@
 				        <div class="form-group">
 				            <label for="contentcatid" class="control-label col-sm-2">科目：</label>
 				        	<div class="col-sm-9 form-inline">
-							    <select id="cscatid" msg="请选择科目" needle="needle" target="csbasicid" class="combox form-control" name="args[cssubjectid]" refUrl="index.php?course-master-index-getajaxbasiclist&subjectid={value}">
+							    <select id="cscatid" msg="请选择科目" needle="needle" class="form-control" name="args[cssubjectid]">
 					            	<option value="">请选择科目</option>
 					            	{x2;tree:$subjects,subject,sid}
 					            	<option value="{x2;v:subject['subjectid']}">{x2;v:subject['subject']}</option>
