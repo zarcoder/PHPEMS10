@@ -125,8 +125,11 @@ $(function(){
 		}
 	})
 	{x2;endif}
+	$.recordVideo = setInterval(function(){
+		$.get('index.php?course-app-course-recordtime&courseid={x2;$content['courseid']}&time='+player.currentTime()+'&userhash='+Math.random());
+	},20000);	
 	player.on('ended',function(){
-		$.get('index.php?course-phone-course-endstatus&courseid={x2;$content['courseid']}&'+Math.random(),function(){
+		$.get('index.php?course-app-course-endstatus&courseid={x2;$content['courseid']}&'+Math.random(),function(){
 			window.location.reload();
 		});
 	})

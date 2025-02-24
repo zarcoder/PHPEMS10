@@ -126,7 +126,7 @@
 		})
 		{x2;endif}
 		pep.recordVideo = setInterval(function(){
-			$.get('index.php?course-phone-course-recordtime&data='+pep.encodeVideo($('#videoPlayer'),player)+'&userhash='+Math.random());
+			$.get('index.php?course-phone-course-recordtime&courseid={x2;$content['courseid']}&time='+player.currentTime()+'&userhash='+Math.random());
 		},20000);
 		player.on('ended',function(){
 			$.get('index.php?course-phone-course-endstatus&courseid={x2;$content['courseid']}&'+Math.random(),function(){
