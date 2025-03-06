@@ -62,14 +62,14 @@
 			<h1 class="logo"><img src="files/public/img/logo.png" style="height:56px;"/></h1>
 		</div>
 		<div class="col-xs-9">
-			<ul class="list-unstyled list-inline text-right">
-                {x2;tree:$navs,nav,nid}
+			<ul class="list-unstyled list-inline text-left">
+				{x2;tree:$navs,nav,nid}
 				<li>
 					<a href="{x2;v:nav['navurl']}" class="menu">
-                        {x2;v:nav['navtitle']}
+						{x2;v:nav['navtitle']}
 					</a>
 				</li>
-                {x2;endtree}
+				{x2;endtree}
 			</ul>
 		</div>
 	</div>

@@ -56,6 +56,8 @@
     </div>
 </div>
 <script>
+    var initData = {};
+    var storage = window.localStorage;
     $(function(){
         setTimeout(function(){
 			try{
@@ -100,6 +102,7 @@
                 var now = Date.parse(new Date())/1000;
                 $('#time_'+that.attr('rel')).val(now);
                 initData[that.attr('rel')] = {value:that.val(),time:now};
+                storage.setItem('questions', JSON.stringify(initData));
                 markQuestions();
             },100);
         });
@@ -114,6 +117,7 @@
                     answer += $(this).val().toUpperCase();
                 });
                 initData[that.attr('rel')] = {value:answer,time:now};
+                storage.setItem('questions', JSON.stringify(initData));
                 markQuestions();
             },100);
         });
@@ -124,6 +128,7 @@
                 var now = Date.parse(new Date())/1000;
                 $('#time_'+that.attr('rel')).val(now);
                 initData[that.attr('rel')] = {value:that.val(),time:now};
+                storage.setItem('questions', JSON.stringify(initData));
                 markQuestions();
             },100);
         });

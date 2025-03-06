@@ -279,7 +279,7 @@
 			{x2;if:$data['currentbasic']['basicexam']['fullsubmit']}
 			if($('.qindex.btn-primary').length < $('.qindex').length)
 			{
-				$.zoombox.show('ajax',{message:'请先答完所有试题！'});
+				$.zoombox.show('ajax',{message:'您有题目未作答，请认真检查！'});
 			}
 			else
 			{

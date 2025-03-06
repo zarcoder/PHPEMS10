@@ -62,7 +62,7 @@
 			<h1 class="logo"><img src="files/public/img/logo.png" style="height:56px;"/></h1>
 		</div>
 		<div class="col-xs-9">
-			<ul class="list-unstyled list-inline text-right">
+			<ul class="list-unstyled list-inline text-left">
 				{x2;tree:$navs,nav,nid}
 				<li>
 					<a href="{x2;v:nav['navurl']}" class="menu">

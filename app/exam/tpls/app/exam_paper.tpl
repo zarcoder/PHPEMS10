@@ -127,7 +127,7 @@
                                     {x2;if:v:key >= v:question['questionselectnumber']}
                                     {x2;eval: break;}
                                     {x2;endif}
-									<label class="inline"><input type="checkbox" name="question[{x2;v:question['questionid']}][{x2;v:key}]" rel="{x2;v:question['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/><span class="selector">{x2;v:so}</span> </label>
+									<label class="inline"><input type="checkbox" name="question[{x2;v:question['questionid']}][{x2;v:key}]" rel="{x2;v:question['questionid']}" value="{x2;v:so}" {x2;if:is_array($sessionvars['examsessionuseranswer'][v:question['questionid']]) && in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/><span class="selector">{x2;v:so}</span> </label>
                                     {x2;endtree}
                                     {x2;endif}
 								</div>
@@ -189,7 +189,7 @@
                                     {x2;if:v:key >= v:question['questionselectnumber']}
                                     {x2;eval: break;}
                                     {x2;endif}
-									<label class="inline"><input type="checkbox" name="question[{x2;v:question['questionid']}][{x2;v:key}]" rel="{x2;v:question['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/><span class="selector">{x2;v:so}</span> </label>
+									<label class="inline"><input type="checkbox" name="question[{x2;v:question['questionid']}][{x2;v:key}]" rel="{x2;v:question['questionid']}" value="{x2;v:so}" {x2;if:is_array($sessionvars['examsessionuseranswer'][v:question['questionid']]) && in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/><span class="selector">{x2;v:so}</span> </label>
                                     {x2;endtree}
                                     {x2;endif}
 								</div>
@@ -254,7 +254,7 @@ $(function(){
 		{x2;if:$data['currentbasic']['basicexam']['fullsubmit']}
 		if($('.qindex.btn-primary').length < $('.qindex').length)
 		{
-			$.zoombox.show('ajax',{message:'请先答完所有试题！'});
+			$.zoombox.show('ajax',{message:'您有题目未作答，请认真检查！'});
 		}
 		else
 		{
