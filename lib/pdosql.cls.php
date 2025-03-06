@@ -196,7 +196,7 @@ class pdosql
 					if($args[$p['Field']])$newargs[$p['Field']] = $args[$p['Field']];
 					else
 					{
-						if(array_key_exists($p['Field'],$args))
+						if(is_array($args)&&array_key_exists($p['Field'],$args))
 						{
 							$newargs[$p['Field']] = $this->_setDefaultInsetValue($p['Type']);
 						}

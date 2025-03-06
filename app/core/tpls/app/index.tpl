@@ -45,58 +45,6 @@
                             {x2;endtree}
 						</ul>
 					</div>
-					<div class="content-box padding">
-						<h2 class="title">
-							最新课程
-							<a href="index.php?course" class="badge pull-right">更多 <em class="glyphicon glyphicon-plus"></em> </a>
-						</h2>
-						<ul class="list-unstyled list-box">
-                            {x2;tree:$courses['data'],content,cid}
-							<li class="col-xs-4 box">
-								<a href="index.php?course-app-course&csid={x2;v:content['csid']}">
-									<div class="img">
-										<img src="{x2;if:v:content['csthumb']}{x2;v:content['csthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
-									</div>
-									<h5 class="box-title">{x2;v:content['cstitle']}</h5>
-									<div class="intro">
-										<p>{x2;substring:v:content['csdescribe'],78}</p>
-									</div>
-								</a>
-							</li>
-                            {x2;if:v:cid == 3}
-						</ul>
-						<ul class="list-box list-unstyled">
-                            {x2;endif}
-                            {x2;endtree}
-						</ul>
-					</div>
-					<div class="content-box padding">
-						<h2 class="title">
-							热点新闻
-							<a href="index.php?content" class="badge pull-right">更多 <em class="glyphicon glyphicon-plus"></em> </a>
-						</h2>
-						<ul class="list-unstyled list-img">
-                            {x2;tree:$topnews['data'],content,cid}
-							<li class="border morepadding">
-								<h4 class="shorttitle">
-									<a href="index.php?content-app-content&contentid={x2;v:content['pccontentid']}">{x2;v:content['pctitle']}</a>
-								</h4>
-								<div class="intro">
-									<div class="col-xs-3 img">
-										<img src="{x2;v:content['pcthumb']}" />
-									</div>
-									<div class="desc">
-										<p>{x2;v:content['pcdescribe']}</p>
-										<p class="toolbar">
-                                            {x2;date:v:content['pctime'],'Y-m-d'}
-											<a href="index.php?content-app-content&contentid={x2;v:content['pccontentid']}" class="hide btn btn-info pull-right more">查看详情</a>
-										</p>
-									</div>
-								</div>
-							</li>
-                            {x2;endtree}
-						</ul>
-					</div>
 				</div>
 				<div class="col-xs-3 nopadding">
 					<div class="content-box padding">

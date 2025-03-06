@@ -4,7 +4,7 @@
 			<ul class="list-unstyled list-inline">
 				<li>
 					<a href="" class="menu">
-						新乡市落笔千言网络技术有限公司
+						东北大学计算机学院
 					</a>
 				</li>
 			</ul>
