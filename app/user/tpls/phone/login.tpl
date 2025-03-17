@@ -14,7 +14,7 @@
 				<ol>
 					<li class="unstyled">
 						<div class="text-center">
-							<img src="files/public/img/logo2.png" class="circle" style="width: 1.92rem;"/>
+							<a href="index.php"><img src="files/public/img/logo2.png" class="circle" style="width: 1.92rem;"/></a>
 						</div>
 					</li>
 				</ol>
