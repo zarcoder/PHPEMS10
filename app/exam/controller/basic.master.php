@@ -453,7 +453,7 @@ class action extends app
 			{
 				$args[] = array('AND',"ehexamid = :ehexamid",'ehexamid',$search['examid']);
 			}
-			$sf = array('ehusername','ehscore');
+			$sf = array('ehusername','ehscore','ehuserid');
 			foreach($fields as $p)
 			{
 				$sf[] = $p['field'];
@@ -462,7 +462,13 @@ class action extends app
 			$r = array();
 			foreach($rs as $p)
 			{
-				$tmp = array('ehusername' => iconv("UTF-8","GBK",$p['ehusername']),'ehscore' => $p['ehscore']);
+				// 获取用户信息以获取真实姓名
+				$user = $this->user->getUserById($p['ehuserid']);
+				$tmp = array(
+					'ehusername' => iconv("UTF-8","GBK",$p['ehusername']),
+					'usertruename' => iconv("UTF-8","GBK",$user['usertruename']),
+					'ehscore' => $p['ehscore']
+				);
 				foreach($fields as $ps)
 				{
 					$tmp[$ps['field']] = iconv("UTF-8","GBK",$p[$ps['field']]);
@@ -603,6 +609,36 @@ class action extends app
 			$args[] = array('AND',"ehexamid = :ehexamid",'ehexamid',$search['examid']);
 		}
 		$exams = $this->favor->getExamHistoryListByArgs($args,$page,30);
+		
+		// 获取所有考生的用户ID
+		$userids = array();
+		foreach($exams['data'] as $exam) {
+			if($exam['ehuserid']) {
+				$userids[] = $exam['ehuserid'];
+			}
+		}
+		
+		// 获取用户信息
+		$users = array();
+		if(count($userids)) {
+			$userids = array_unique($userids);
+			foreach($userids as $userid) {
+				$user = $this->user->getUserById($userid);
+				if($user) {
+					$users[$userid] = $user;
+				}
+			}
+		}
+		
+		// 将用户真实姓名添加到考试记录中
+		foreach($exams['data'] as $key => $exam) {
+			if(isset($users[$exam['ehuserid']])) {
+				$exams['data'][$key]['usertruename'] = $users[$exam['ehuserid']]['usertruename'];
+			} else {
+				$exams['data'][$key]['usertruename'] = '';
+			}
+		}
+		
 		$ids = trim($basic['basicexam']['self'],', ');
 		if(!$ids)$ids = '0';
 		$exampaper = $this->exam->getExamSettingsByArgs(array(array("AND","find_in_set(examid,:examid)",'examid',$ids)));

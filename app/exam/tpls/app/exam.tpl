@@ -37,7 +37,6 @@
 										<div class="toolbar">
 											<div class="pull-right more">
 												<a href="index.php?exam-app-recover&sessionid={x2;$sessionvars['examsessionid']}&token={x2;$token}" class="btn btn-primary ajax">继续考试</a>&nbsp;&nbsp;
-												<a href="index.php?exam-app-recover-clearexamsession&sessionid={x2;$sessionvars['examsessionid']}&token={x2;$token}" class="btn btn-danger confirm" msg="放弃考试会删除此次考试会话并不能恢复，确认要放弃吗？">放弃考试</a>
 											</div>
 										</div>
 									</div>

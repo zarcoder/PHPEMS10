@@ -4,7 +4,7 @@
 			PHPEMS在线模拟考试系统 著作权登记号：2013 SR 113189
 		</p>
 		<p class="text-center">
-			Copyright © phpems.net  {x2;date:TIME,'Y'}
+			Copyright © ACM-Team  {x2;date:TIME,'Y'}
 		</p>
 	</div>
 </div>

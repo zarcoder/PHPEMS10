@@ -253,6 +253,16 @@ class action extends app
 					);
 					ginkgo::R($message);
 				}
+				
+				// 保存人脸比对照片
+				$files = ginkgo::make('files');
+				$photoDir = 'files/attach/images/face/'.date('Ymd');
+				if(!file_exists($photoDir)) {
+					$files->mdir($photoDir);
+				}
+				$photoPath = $photoDir.'/'.$this->_user['sessionuserid'].'_'.time().'.png';
+				$photoContent = base64_decode($photo);
+				$files->writeFile($photoPath, $photoContent);
 			}
 		}
 		if($this->data['currentbasic']['basicexam']['selectrule'])

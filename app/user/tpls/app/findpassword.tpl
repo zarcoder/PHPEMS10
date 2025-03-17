@@ -1,6 +1,6 @@
 {x2;include:header}
 <body>
-<div class="container-fluid" style="height: 100vh;background:radial-gradient(circle at 50% 30%, #4f4f4f, #000);">
+<div class="container-fluid" style="height: 100vh;background:radial-gradient(circle at 50% 30%, #204198, #000);">
 	<div class="row-fluid">
 		<div class="pages">
 			<div class="content" style="margin-top: 10vh;">

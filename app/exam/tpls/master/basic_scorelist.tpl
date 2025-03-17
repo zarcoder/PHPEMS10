@@ -73,6 +73,7 @@
 			                    <th>ID</th>
 			                    <th>名次</th>
 			                    <th>考生用户名</th>
+			                    <th>考生姓名</th>
 			                    {x2;tree:$fields,field,fid}
 			                    <th>{x2;v:field['fieldtitle']}</th>
 			                    {x2;endtree}
@@ -95,6 +96,9 @@
 								</td>
 								<td>
 									{x2;v:exam['ehusername']}
+								</td>
+								<td>
+									{x2;v:exam['usertruename']}
 								</td>
 								{x2;tree:$fields,field,fid}
 			                    <th>{x2;v:exam[v:field['field']]}</th>
