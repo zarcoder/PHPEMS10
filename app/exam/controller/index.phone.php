@@ -82,7 +82,11 @@ class action extends app
 			case 'lefttime':
 			$sessionid = $this->ev->get('sessionid');
 			$sessionvars = $this->exam->getExamSessionBySessionid($sessionid);
-			$lefttime = TIME - $sessionvars['examsessionstarttime'];
+			if($this->data['currentbasic']['basicexam']['opentime']['start'] && $this->data['currentbasic']['basicexam']['opentime']['end'])
+			$t = $this->data['currentbasic']['basicexam']['opentime']['end'];
+			else
+			$t = TIME;
+			$lefttime = $t - $sessionvars['examsessionstarttime'];
 			if($lefttime < 0 )$lefttime = 0;
 			exit("{$lefttime}");
 			break;

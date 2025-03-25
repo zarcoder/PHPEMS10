@@ -187,7 +187,7 @@ class action extends app
 				    if($data[0] && $data[1])
 				    {
 					    $args = array();
-					    $args['username'] = iconv("GBK","UTF-8",$data[0]);
+					    $args['username'] = mb_detect_encoding($data[0], 'UTF-8', true) ? $data[0] : iconv("GBK","UTF-8",$data[0]);
 					    if($strings->isUserName($args['username']))
 					    {
 						    $u = $this->user->getUserByUserName($args['username']);
@@ -205,7 +205,7 @@ class action extends app
 								    	$i = 3;
 								    	foreach($tpfields as $p)
 										{
-                                            $args[$p] = iconv("GBK","UTF-8",$data[$i]);
+                                            $args[$p] = mb_detect_encoding($data[$i], 'UTF-8', true) ? $data[$i] : iconv("GBK","UTF-8",$data[$i]);
                                             $i++;
 										}
 								    	$this->user->insertUser($args);

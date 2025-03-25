@@ -27,7 +27,7 @@ class action extends app
 			$lefttime = 0;
 			$sessionvars = $this->exam->getExamSessionBySessionid();
 			if($this->data['currentbasic']['basicexam']['opentime']['start'] && $this->data['currentbasic']['basicexam']['opentime']['end'])
-			$t = $this->data['currentbasic']['basicexam']['opentime']['end']-300;
+			$t = $this->data['currentbasic']['basicexam']['opentime']['end'];
 			else
 			$t = TIME;
 			$lefttime = $t - $sessionvars['examsessionstarttime'];
