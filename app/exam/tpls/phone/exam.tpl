@@ -16,13 +16,13 @@
 					<li>
 						<span class="rows"><span class="intro">
 						考场开启时间{x2;if:$data['currentbasic']['basicexam']['opentime']['start'] && $data['currentbasic']['basicexam']['opentime']['end']}
-                        	{x2;date:$data['currentbasic']['basicexam']['opentime']['start'],'Y-m-d H:i'} - {x2;date:$data['currentbasic']['basicexam']['opentime']['end'],'Y-m-d H:i'}{x2;else}不限{x2;endif}&nbsp;&nbsp;
+                        	{x2;date:$data['currentbasic']['basicexam']['opentime']['start'],'Y-m-d H:i'} - {x2;date:$data['currentbasic']['basicexam']['opentime']['end']-300,'Y-m-d H:i'}{x2;else}不限{x2;endif}&nbsp;&nbsp;
 							限考次数 {x2;if:$data['currentbasic']['basicexam']['examnumber']}{x2;$data['currentbasic']['basicexam']['examnumber']}{x2;else}不限{x2;endif}
 						</span></span>
 					</li>
 					
 					<li><span class="rows"><span class="intro">在考试过程中，您可以通过左下方的考试时间来掌握自己的做题时间。</span></span></li>
-					<li><span class="rows"><span class="intro">系统自动记录考试的考试记录，学员考试结束后可在本页点击右上方进入“答题记录”进行查看。</span></span></li>
+					<li><span class="rows"><span class="intro">系统自动记录考试的考试记录，学员考试结束后可在本页点击右上方进入"答题记录"进行查看。</span></span></li>
 				</ol>
 			</div>
 			<div class="list-box bg top">
