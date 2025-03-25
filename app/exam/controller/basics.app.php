@@ -176,29 +176,266 @@ class action extends app
 		$this->tpl->display('basics_detail');
 	}
 
-	private function index()
+	public function index()
 	{
-        $search = $this->ev->get('search');
         $page = $this->ev->get('page');
-        $page = $page > 1?$page:1;
-        $subjects = $this->basic->getSubjectList();
-		$args = array();
-		if($search['basicdemo'])$args[] = array("AND","basicdemo = :basicdemo",'basicdemo',$search['basicdemo']);
-		if($search['keyword'])$args[] = array("AND","basic LIKE :basic",'basic',"%{$search['keyword']}%");
-		if($search['basicareaid'])$args[] = array("AND","basicareaid = :basicareaid","basicareaid",$search['basicareaid']);
-		if($search['basicsubjectid'])$args[] = array("AND","basicsubjectid = :basicsubjectid",'basicsubjectid',$search['basicsubjectid']);
-		if($search['basicapi'])$args[] = array("AND","basicapi = :basicapi",'basicapi',$search['basicapi']);
-        $basics = $this->basic->getBasicList($args,$page,15);
+        $search = $this->ev->get('search');
+        $u = '';
+        if($search)
+        {
+            $this->tpl->assign('search',$search);
+            foreach($search as $key => $arg)
+            {
+                $u .= "&search[{$key}]={$arg}";
+            }
+        }
+        $this->tpl->assign('u',$u);
+        $args = array(array("AND","basicclosed = 0"));
+        if($search['basicdemo'])$args[] = array("AND","basicdemo = :basicdemo","basicdemo",$search['basicdemo']);
+        if($search['keyword'])$args[] = array("AND","basic LIKE :basic","basic","%{$search['keyword']}%");
+        if($search['basicareaid'])$args[] = array("AND","basicareaid = :basicareaid","basicareaid",$search['basicareaid']);
+        if($search['basicsubjectid'])$args[] = array("AND","basicsubjectid = :basicsubjectid","basicsubjectid",$search['basicsubjectid']);
+        if($search['basicapi'])$args[] = array("AND","basicapi = :basicapi","basicapi",$search['basicapi']);
+        $basics = $this->basic->getBasicList($args,$page);
         $areas = $this->area->getAreaList();
-        $args = array();
-        $args[] = array("AND","basictop = 1");
-        $news = $this->basic->getBasicsByArgs($args,5);
-        $this->tpl->assign('news',$news);
-        $this->tpl->assign('search',$search);
+        $subjects = $this->subject->getSubjectList();
         $this->tpl->assign('areas',$areas);
         $this->tpl->assign('subjects',$subjects);
         $this->tpl->assign('basics',$basics);
         $this->tpl->display('basics');
+	}
+
+	public function openbatbasics()
+	{
+		$basicids = $this->ev->get('basicids');
+		$number = $this->ev->get('number');
+		if($number)
+		{
+			$ids = explode(',',$basicids);
+			foreach($ids as $id)
+			{
+				$this->basic->openBasic($id);
+			}
+			$message = array(
+				'statusCode' => 200,
+				"message" => "操作成功",
+				"callbackType" => "forward",
+				"forwardUrl" => "index.php?exam-master-basic"
+			);
+		}
+		else
+		{
+			$message = array(
+				'statusCode' => 300,
+				"message" => "请选择要开通的考场"
+			);
+		}
+		$this->G->R($message);
+	}
+
+	public function closebatbasics()
+	{
+		$basicids = $this->ev->get('basicids');
+		$number = $this->ev->get('number');
+		if($number)
+		{
+			$ids = explode(',',$basicids);
+			foreach($ids as $id)
+			{
+				$this->basic->closeBasic($id);
+			}
+			$message = array(
+				'statusCode' => 200,
+				"message" => "操作成功",
+				"callbackType" => "forward",
+				"forwardUrl" => "index.php?exam-master-basic"
+			);
+		}
+		else
+		{
+			$message = array(
+				'statusCode' => 300,
+				"message" => "请选择要关闭的考场"
+			);
+		}
+		$this->G->R($message);
+	}
+
+	public function getsubjectquestype()
+	{
+		$subjectid = $this->ev->get('subjectid');
+		$subject = $this->subject->getSubjectById($subjectid);
+		$r = array();
+		if($subject['subjectsetting']['questypes'])
+		{
+			foreach($subject['subjectsetting']['questypes'] as $key => $p)
+			{
+				if($p)$r[] = $key;
+			}
+		}
+		exit(json_encode($r));
+	}
+
+	public function getbasicmembernumber()
+	{
+		$basicid = $this->ev->get('basicid');
+		$number = $this->basic->getBasicMemberNumber($basicid);
+		echo $number;
+	}
+
+	public function output()
+	{
+		$args = array(array("AND","basicclosed = 0"));
+		$basics = $this->basic->getBasicsList($args);
+		$this->tpl->assign('basics',$basics);
+		$this->tpl->display('output');
+	}
+
+	public function ajax()
+	{
+		switch($this->ev->url(4))
+		{
+			case 'getsubjectknows':
+			$subjectid = $this->ev->get('subjectid');
+			$basic = $this->basic->getBasicById($this->ev->get('basicid'));
+			$subject = $this->subject->getSubjectById($subjectid);
+			$r = array();
+			$tmp = $subject['subjectsetting']['knowsids'];
+			$knowsids = '';
+			if(is_array($tmp))
+			{
+				foreach($tmp as $p)
+				{
+					if($basic['basicknows'][$tmp])
+					$knowsids .= $p.',';
+				}
+			}
+			$knowsids = trim($knowsids,' ,');
+			$knows = $this->section->getAllKnowsBySubject($subjectid);
+			if(is_array($knows))
+			{
+				foreach($knows as $p)
+				{
+					$r[$p['knowsid']] = array('knowsid'=>$p['knowsid'],'knows'=>$p['knows'],'knowssequence'=>$p['knowssequence']);
+				}
+			}
+			exit(json_encode(array('knows'=>$r,'knowsids'=>$knowsids)));
+			break;
+
+			case 'getknows':
+			$subjectid = $this->ev->get('subjectid');
+			$knowsids = $this->ev->get('knowsids');
+			$knows = $this->section->getAllKnowsBySubject($subjectid);
+			$r = array();
+			if(is_array($knows))
+			{
+				foreach($knows as $p)
+				{
+					$r[$p['knowsid']] = array('knowsid'=>$p['knowsid'],'knows'=>$p['knows'],'knowssequence'=>$p['knowssequence']);
+				}
+			}
+			exit(json_encode(array('knows'=>$r,'knowsids'=>$knowsids)));
+			break;
+
+			case 'getbasicmembernumber':
+			$basicid = $this->ev->get('basicid');
+			$number = $this->basic->getBasicMemberNumber($basicid);
+			echo $number;
+			break;
+
+			default:
+			break;
+		}
+	}
+
+	public function batdelbasic()
+	{
+		$page = $this->ev->get('page');
+		$delids = $this->ev->get('delids');
+		foreach($delids as $basicid => $p)
+		{
+			$this->basic->delBasic($basicid);
+		}
+		$message = array(
+			'statusCode' => 200,
+			"message" => "操作成功",
+			"callbackType" => "forward",
+			"forwardUrl" => "index.php?exam-master-basic&page={$page}{$u}"
+		);
+		$this->G->R($message);
+	}
+
+	public function add()
+	{
+		if($this->ev->get('insertbasic'))
+		{
+			$args = $this->ev->get('args');
+			$args['basicexam']['opentime']['start'] = strtotime($args['basicexam']['opentime']['start']);
+			$args['basicexam']['opentime']['end'] = strtotime($args['basicexam']['opentime']['end']);
+			$args['basicsection'] = $args['basicknows'];
+			$this->basic->addBasic($args);
+			$message = array(
+				'statusCode' => 200,
+				"message" => "操作成功",
+				"callbackType" => "forward",
+				"forwardUrl" => "index.php?exam-master-basic"
+			);
+			$this->G->R($message);
+		}
+		else
+		{
+			$subjects = $this->subject->getSubjectList();
+			$areas = $this->area->getAreaList();
+			$this->tpl->assign('areas',$areas);
+			$this->tpl->assign('subjects',$subjects);
+			$this->tpl->display('basic_add');
+		}
+	}
+
+	public function modify()
+	{
+		$basicid = $this->ev->get('basicid');
+		$basic = $this->basic->getBasicById($basicid);
+		if($this->ev->get('modifybasic'))
+		{
+			$args = $this->ev->get('args');
+			$args['basicexam']['opentime']['start'] = strtotime($args['basicexam']['opentime']['start']);
+			$args['basicexam']['opentime']['end'] = strtotime($args['basicexam']['opentime']['end']);
+			$args['basicsection'] = $args['basicknows'];
+			$this->basic->setBasicConfig($basicid,$args);
+			$message = array(
+				'statusCode' => 200,
+				"message" => "操作成功",
+				"callbackType" => "forward",
+				"forwardUrl" => "index.php?exam-master-basic&page={$page}{$u}"
+			);
+			$this->G->R($message);
+		}
+		else
+		{
+			$subjects = $this->subject->getSubjectList();
+			$areas = $this->area->getAreaList();
+			$knows = $this->section->getAllKnowsBySubject($basic['basicsubjectid']);
+			$this->tpl->assign('areas',$areas);
+			$this->tpl->assign('subjects',$subjects);
+			$this->tpl->assign('basic',$basic);
+			$this->tpl->assign('knows',$knows);
+			$this->tpl->display('basic_modify');
+		}
+	}
+
+	public function del()
+	{
+		$basicid = $this->ev->get('basicid');
+		$page = $this->ev->get('page');
+		$this->basic->delBasic($basicid);
+		$message = array(
+			'statusCode' => 200,
+			"message" => "操作成功",
+			"callbackType" => "forward",
+			"forwardUrl" => "index.php?exam-master-basic&page={$page}{$u}"
+		);
+		$this->G->R($message);
 	}
 }
 

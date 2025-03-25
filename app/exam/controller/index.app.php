@@ -180,12 +180,12 @@ class action extends app
 		$page = $this->ev->get('page');
 		$page = $page > 1?$page:1;
 		$subjects = $this->basic->getSubjectList();
-		$args = array();
-		if($search['keyword'])$args[] = array("AND","basic LIKE :basic",'basic',"%{$search['keyword']}%");
+		$args = array(array("AND","basicclosed = 0"));
+		if($search['keyword'])$args[] = array("AND","basic LIKE :basic","basic","%{$search['keyword']}%");
 		$basics = $this->basic->getBasicList($args,$page,15);
 		$areas = $this->area->getAreaList();
 		$args = array();
-		$args[] = array("AND","basicclosed = 0");
+		$args[] = array("AND","basictop = 1");
 		$news = $this->basic->getBasicsByArgs($args,5);
 		$this->tpl->assign('news',$news);
 		$this->tpl->assign('search',$search);

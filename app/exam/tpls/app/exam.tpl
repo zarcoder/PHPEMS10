@@ -31,7 +31,6 @@
 										<p>系统检测到您曾经在{x2;date:$sessionvars['examsessionstarttime'],'Y-m-d H:i:s'}开启了一场未完成的考试，试卷名称为《{x2;$sessionvars['examsession']}》，点击继续考试可以进行续考。</p>
 										<p class="toolbar">
 											<a class="badge">总分：{x2;$sessionvars['examsessionsetting']['examsetting']['score']} 分</a>
-											<a class="badge">及格分：{x2;$sessionvars['examsessionsetting']['examsetting']['passscore']} 分</a>
 											<a class="badge">时间：{x2;$sessionvars['examsessionsetting']['examsetting']['examtime']} 分钟</a>
 										</p>
 										<div class="toolbar">
@@ -65,7 +64,6 @@
 									<div class="desc">
 										<p class="toolbar">
 											<a class="badge">总分：{x2;v:exam['examsetting']['score']} 分</a>
-											<a class="badge">及格分：{x2;v:exam['examsetting']['passscore']} 分</a>
 											<a class="badge">时间：{x2;v:exam['examsetting']['examtime']} 分钟</a>
 										</p>
 										<p class="toolbar">

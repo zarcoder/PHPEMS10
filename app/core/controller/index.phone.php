@@ -25,7 +25,7 @@ class action extends app
         $this->position = \PHPEMS\ginkgo::make('position','content');
         $courses = $this->course->getCourseList(array(),1,10);
         $basic = \PHPEMS\ginkgo::make('basic','exam');
-        $basics = $basic->getBasicList(array(),1,10);
+        $basics = $basic->getBasicList(array(array("AND","basicclosed = 0")),1,10);
         $topimgs = $this->position->getPosContentList(array(array("AND","pcposid = 4")),1,5);
         $topnews = $this->position->getPosContentList(array(array("AND","pcposid = 2")),1,10);
         $notices = $this->content->getContentList(array(array("AND","contentcatid = 26")),1,10);
