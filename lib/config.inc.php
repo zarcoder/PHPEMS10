@@ -22,9 +22,11 @@ define('OPENOSS',false);
 
 /**composer开关**/
 define('COMPOSER',1);
+/** 调试模式设置 */
+define('DEBUG',true);
 /** 数据库设置 */
 define('SQLDEBUG',0);
-define('DB','phpems10');//MYSQL数据库名
+define('DB','phpems');//MYSQL数据库名
 define('DH','127.0.0.1');//MYSQL主机名，不用改
 define('DU','root');//MYSQL数据库用户名
 define('DP','dell@2022');//MYSQL数据库用户密码
@@ -51,5 +53,13 @@ define('ALIAPPID','2016092200000000');
 define('ALIPRIKEY','ALIPRIKEY');
 define('ALIPUBKEY','ALIPUBKEY');
 
+/** CAS统一身份认证相关设置 */
+define('USECAS', true); // CAS使用开关
+define('CAS_HOST', 'pass.neu.edu.cn'); // CAS服务器主机名
+define('CAS_PORT', 443); // CAS服务器端口
+define('CAS_CONTEXT', '/tpass'); // CAS上下文路径
+define('CAS_CERT', ''); // CAS服务器证书路径，留空表示不验证证书
+define('CAS_VERSION', '2.0'); // CAS版本
+define('CAS_AUTO_CREATE_USER', true); // 是否自动创建用户
 
 ?>

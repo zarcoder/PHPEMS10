@@ -33,6 +33,14 @@
 						登陆
 					</a>
 				</li>
+				{x2;if:defined('USECAS') && USECAS}
+				<li>|</li>
+				<li>
+					<a href="index.php?user-app-cas" class="menu">
+						统一身份认证登录
+					</a>
+				</li>
+				{x2;endif}
 				<li>|</li>
 				<li>
 					<a href="index.php?user-app-register" class="menu">

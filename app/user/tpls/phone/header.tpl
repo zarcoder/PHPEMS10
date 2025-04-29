@@ -18,6 +18,9 @@
     <script src="files/public/js/swiper.min.js"></script>
     <script src="files/public/js/less.min.js"></script>
     <script src="files/public/js/sonic.js"></script>
+    <script>
+        var USECAS = {x2;if:defined('USECAS') && USECAS}true{x2;else}false{x2;endif};
+    </script>
     <script src="files/public/js/pe.mobile.js"></script>
     <script src="files/public/js/exam.mobile.js"></script>
 </head>

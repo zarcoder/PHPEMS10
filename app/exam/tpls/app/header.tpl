@@ -14,7 +14,7 @@
 	<script src="files/public/js/bootstrap-datetimepicker.js"></script>
 	<script src="files/public/js/all.fine-uploader.min.js"></script>
 	<script src="files/public/js/ckeditor/ckeditor.js"></script>
-	<script src="files/public/js/ckeditor/js/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script src="files/public/js/ckeditor/js/mathjax/MathJax.js?config=TeX-AMS_HTML"></script>
 	<!--
 	<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>

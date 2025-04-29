@@ -40,6 +40,7 @@ class app
 			{
 				case 'login':
 				case 'register':
+				case 'cas':
 				break;
 				
 				default:

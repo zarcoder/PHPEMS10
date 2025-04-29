@@ -42,6 +42,11 @@
 									<a href="index.php?user-app-register-findpassword">忘记密码？</a>
 								</div>
 								{x2;endif}
+								{x2;if:defined('USECAS') && USECAS}
+								<div class="form-group text-center">
+									<a href="index.php?user-app-cas" class="btn btn-info btn-block" style="margin-bottom: 10px;">统一身份认证登录</a>
+								</div>
+								{x2;endif}
 								<div class="form-group text-center">
 									<button class="btn btn-primary login">登陆</button>
 									<input type="hidden" value="1" name="userlogin"/>

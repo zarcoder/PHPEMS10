@@ -5,6 +5,23 @@ namespace PHPEMS;
 ini_set("display_errors","on");
 error_reporting(E_ERROR || E_PARSE);
 
+// 添加url函数，用于生成完整的URL
+if (!function_exists('url')) {
+    function url($path = '') {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $host = $_SERVER['HTTP_HOST'];
+        $baseUrl = $protocol . $host;
+        
+        // 如果路径是'/'，则只返回基本URL
+        if ($path === '/') {
+            return $baseUrl;
+        }
+        
+        // 否则拼接路径
+        return $baseUrl . $path;
+    }
+}
+
 class ginkgo
 {
     static public $G = array();

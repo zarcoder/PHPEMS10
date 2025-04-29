@@ -1,0 +1,36 @@
+C3D4 .START (2025-04-29 14:52:26) phpCAS-1.6.1 ****************** [CAS.php:512]
+C3D4 .=> phpCAS::client('2.0', 'pass.neu.edu.cn', 443, '/tpass', 'http://localhost:8000/index.php?user-app-cas') [debug_cas.php:66]
+C3D4 .|    => CAS_Client::__construct('2.0', false, 'pass.neu.edu.cn', 443, '/tpass', 'http://localhost:8000/index.php?user-app-cas', true, CAS_Session_PhpSession) [CAS.php:368]
+C3D4 .|    |    Starting a new session 2m1d2r8tqrahc0g1fqufmnukj3 [Client.php:974]
+C3D4 .|    |    Session is not authenticated [Client.php:982]
+C3D4 .|    <= ''
+C3D4 .<= ''
+C3D4 .=> phpCAS::setNoCasServerValidation() [debug_cas.php:74]
+C3D4 .|    You have configured no validation of the legitimacy of the cas server. This is not recommended for production use. [CAS.php:1705]
+C3D4 .<= ''
+C3D4 .=> CAS_Client::getServerLoginURL() [CAS.php:1351]
+C3D4 .|    => CAS_Client::getURL() [Client.php:364]
+C3D4 .|    |    => CAS_ServiceBaseUrl_Static::get() [Client.php:3967]
+C3D4 .|    |    |    Returning static server name: http://localhost:8000/index.php?user-app-cas [Static.php:65]
+C3D4 .|    |    <= true
+C3D4 .|    |    Final URI: http://localhost:8000/index.php?user-app-cas/debug_cas.php [Client.php:3981]
+C3D4 .|    <= 'http://localhost:8000/index.php?user-app-cas/debug_cas.php'
+C3D4 .<= 'https://pass.neu.edu.cn/tpass/login?service=http%3A%2F%2Flocalhost%3A8000%2Findex.php%3Fuser-app-cas%2Fdebug_cas.php'
+1969 .START (2025-04-29 14:53:43) phpCAS-1.6.1 ****************** [CAS.php:512]
+1969 .=> phpCAS::client('2.0', 'pass.neu.edu.cn', 443, '/tpass', 'http://localhost:8000/index.php?user-app-cas') [debug_cas.php:66]
+1969 .|    => CAS_Client::__construct('2.0', false, 'pass.neu.edu.cn', 443, '/tpass', 'http://localhost:8000/index.php?user-app-cas', true, CAS_Session_PhpSession) [CAS.php:368]
+1969 .|    |    Starting a new session 2m1d2r8tqrahc0g1fqufmnukj3 [Client.php:974]
+1969 .|    |    Session is not authenticated [Client.php:982]
+1969 .|    <= ''
+1969 .<= ''
+1969 .=> phpCAS::setNoCasServerValidation() [debug_cas.php:74]
+1969 .|    You have configured no validation of the legitimacy of the cas server. This is not recommended for production use. [CAS.php:1705]
+1969 .<= ''
+1969 .=> CAS_Client::getServerLoginURL() [CAS.php:1351]
+1969 .|    => CAS_Client::getURL() [Client.php:364]
+1969 .|    |    => CAS_ServiceBaseUrl_Static::get() [Client.php:3967]
+1969 .|    |    |    Returning static server name: http://localhost:8000/index.php?user-app-cas [Static.php:65]
+1969 .|    |    <= true
+1969 .|    |    Final URI: http://localhost:8000/index.php?user-app-cas/debug_cas.php [Client.php:3981]
+1969 .|    <= 'http://localhost:8000/index.php?user-app-cas/debug_cas.php'
+1969 .<= 'https://pass.neu.edu.cn/tpass/login?service=http%3A%2F%2Flocalhost%3A8000%2Findex.php%3Fuser-app-cas%2Fdebug_cas.php'

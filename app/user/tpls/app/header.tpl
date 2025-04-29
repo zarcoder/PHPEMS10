@@ -16,6 +16,9 @@
 	<script src="files/public/js/bootstrap-datetimepicker.js"></script>
 	<script src="files/public/js/all.fine-uploader.min.js"></script>
 	<script src="files/public/js/ckeditor/ckeditor.js"></script>
+	<script>
+		var USECAS = {x2;if:defined('USECAS') && USECAS}true{x2;else}false{x2;endif};
+	</script>
 	<script src="files/public/js/pe.app.js"></script>
 	<script src="files/public/js/exam.app.js"></script>
 </head>

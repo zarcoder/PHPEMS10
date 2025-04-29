@@ -21,12 +21,24 @@ class action extends app
 	{
 		$_SESSION['openid'] = null;
 		$this->session->clearSessionUser();
-        $message = array(
-            'statusCode' => 201,
-            "message" => "操作成功",
-            "callbackType" => 'forward',
-            "forwardUrl" => "index.php?".\PHPEMS\ginkgo::$defaultApp
-        );
+        
+        // 如果启用了CAS，重定向到CAS注销
+        if(defined('USECAS') && USECAS) {
+            $message = array(
+                'statusCode' => 201,
+                "message" => "操作成功",
+                "callbackType" => 'forward',
+                "forwardUrl" => "index.php?user-phone-cas-logout"
+            );
+        } else {
+            $message = array(
+                'statusCode' => 201,
+                "message" => "操作成功",
+                "callbackType" => 'forward',
+                "forwardUrl" => "index.php?".\PHPEMS\ginkgo::$defaultApp
+            );
+        }
+        
 		\PHPEMS\ginkgo::R($message);
 	}
 }
