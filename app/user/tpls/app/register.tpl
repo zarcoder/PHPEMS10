@@ -8,7 +8,7 @@
 				<div class="col-xs-6 nopadding">
 					<div class="content-box padding">
 						<h2 class="title">
-							用户登陆
+							用户登录
 							<a href="index.php" class="badge pull-right">首页</a>
 						</h2>
 						<form method="post" action="index.php?user-app-register">
@@ -69,7 +69,7 @@
                                     {x2;else}
 									<button class="btn btn-primary login">注册</button>
                                     {x2;endif}
-									<a href="index.php?user-app-login" class="btn btn-default login">登陆</a>
+									<a href="index.php?user-app-login" class="btn btn-default login">登录</a>
 									<input type="hidden" value="1" name="userregister"/>
 								</div>
 							</fieldset>

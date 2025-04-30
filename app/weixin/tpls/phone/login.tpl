@@ -39,7 +39,7 @@
 				</div>
 				<div class="form-group">
 					<input type="hidden" name="userlogin" value="1">
-					<button class="success block" type="submit"><i class="fa fa-wechat-fill"></i> 登陆并绑定微信</button>
+					<button class="success block" type="submit"><i class="fa fa-wechat-fill"></i> 登录并绑定微信</button>
 				</div>
 				<div class="form-group text-center">
 					<a class="ajax" href="index.php?weixin-phone-index-bindregister">没有账号？立即注册</a>

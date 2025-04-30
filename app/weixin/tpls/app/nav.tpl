@@ -30,7 +30,7 @@
 				{x2;else}
 				<li>
 					<a href="index.php?user-app-login" class="menu">
-						登陆
+						登录
 					</a>
 				</li>
 				<li>|</li>

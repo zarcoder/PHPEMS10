@@ -8,7 +8,7 @@
 class AlipayUserInfoAuthRequest
 {
 	/** 
-	 * 用户登陆授权
+	 * 用户登录授权
 	 **/
 	private $bizContent;
 

@@ -58,7 +58,7 @@
 								</div>
 								<div class="form-group text-center">
                                     <button class="btn btn-primary login">找回密码</button>
-									<a href="index.php?user-app-login" class="btn btn-default login">登陆</a>
+									<a href="index.php?user-app-login" class="btn btn-default login">登录</a>
 									<input type="hidden" value="1" name="findpassword" autocomplete="off">
 								</div>
 							</fieldset>

@@ -19,7 +19,7 @@ class app
         {
             $message = array(
                 'statusCode' => 301,
-                "message" => "请您重新登陆",
+                "message" => "请您重新登录",
                 "callbackType" => 'forward',
                 "forwardUrl" => "index.php?user-app-login"
             );

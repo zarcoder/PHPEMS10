@@ -30,7 +30,7 @@
 				{x2;else}
 				<li>
 					<a href="javascript:;" onclick="javascript:$.loginbox.show();" class="menu">
-						登陆
+						登录
 					</a>
 				</li>
 				{x2;if:defined('USECAS') && USECAS}

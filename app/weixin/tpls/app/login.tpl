@@ -8,7 +8,7 @@
 				<div class="col-xs-12 nopadding">
 					<div class="content-box padding">
 						<h2 class="title">
-							扫码登陆
+							扫码登录
 						</h2>
 						<ul class="list-unstyled list-img">
 							<li class="border padding">
@@ -16,7 +16,7 @@
 									<p class="text-center">
 										<img src="{x2;$img}">
 										<br />
-										请使用手机打开微信，选择扫一扫，扫描上方二维码即可登陆。
+										请使用手机打开微信，选择扫一扫，扫描上方二维码即可登录。
 									</p>
 								</div>
 							</li>

@@ -6,7 +6,7 @@
 	<div class="page-tabs">
 		<div class="page-header">
 			<div class="col-1">&nbsp;</div>
-			<div class="col-8">扫码登陆</div>
+			<div class="col-8">扫码登录</div>
 			<div class="col-1">&nbsp;</div>
 		</div>
 		<div class="page-content header">
@@ -21,7 +21,7 @@
 			</div>
 			<form class="top">
 				<div class="form-group text-center">
-					用户{x2;$user['username']}已成功登陆！
+					用户{x2;$user['username']}已成功登录！
 				</div>
 				<div class="form-group">
 					<a href="javascript:;" onclick="javascript:WeixinJSBridge.call('closeWindow');" class="btn success block">关闭</a>

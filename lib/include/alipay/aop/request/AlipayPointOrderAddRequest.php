@@ -33,7 +33,7 @@ class AlipayPointOrderAddRequest
 	private $userSymbol;
 	
 	/** 
-	 * 用户标识符类型，现在支持ALIPAY_USER_ID:表示支付宝用户ID,ALIPAY_LOGON_ID:表示支付宝登陆号
+	 * 用户标识符类型，现在支持ALIPAY_USER_ID:表示支付宝用户ID,ALIPAY_LOGON_ID:表示支付宝登录号
 	 **/
 	private $userSymbolType;
 

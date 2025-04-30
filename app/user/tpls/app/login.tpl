@@ -8,7 +8,7 @@
 				<div class="col-xs-6 nopadding">
 					<div class="content-box padding">
 						<h2 class="title">
-							用户登陆
+							用户登录
 							{x2;if:USEWX}
 							<a class="pull-right badge" href="index.php?weixin-app-index-login">扫码登录</a>
 							{x2;else}
@@ -42,13 +42,8 @@
 									<a href="index.php?user-app-register-findpassword">忘记密码？</a>
 								</div>
 								{x2;endif}
-								{x2;if:defined('USECAS') && USECAS}
 								<div class="form-group text-center">
-									<a href="index.php?user-app-cas" class="btn btn-info btn-block" style="margin-bottom: 10px;">统一身份认证登录</a>
-								</div>
-								{x2;endif}
-								<div class="form-group text-center">
-									<button class="btn btn-primary login">登陆</button>
+									<button class="btn btn-primary login">登录</button>
 									<input type="hidden" value="1" name="userlogin"/>
 									<a href="index.php?user-app-register" class="btn btn-default login">注册</a>
 								</div>
