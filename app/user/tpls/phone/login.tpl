@@ -39,11 +39,13 @@
 				<div class="form-group text-right">
 					<a class="ajax" href="index.php?user-phone-register-findpassword">忘记密码？</a>
 				</div>
+				<!-- 统一身份认证登录按钮移除
 				{x2;if:defined('USECAS') && USECAS}
 				<div class="form-group">
 					<a href="index.php?user-phone-cas" class="btn success block">统一身份认证登录</a>
 				</div>
 				{x2;endif}
+				-->
 				<div class="form-group">
 					<input type="hidden" name="userlogin" value="1">
 					<button class="primary block">登录</button>

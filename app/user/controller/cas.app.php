@@ -103,47 +103,25 @@ class action extends app
                 {
                     if(CAS_AUTO_CREATE_USER)
                     {
-                        // 生成一个随机明文密码（不使用md5）
-                        $plainPassword = substr(uniqid(rand(), true), 0, 10);
+                        // 生成随机密码
+                        $randomPassword = md5(uniqid(rand(), true));
                         
                         // 自动创建用户，使用从CAS获取的属性
                         $userData = array(
                             'username' => $casUsername,
                             'useremail' => $email,
-                            'userpassword' => md5($plainPassword), // 在这里进行md5哈希
+                            'userpassword' => $randomPassword,
                             'usergroupid' => 1, // 默认用户组
                             'usertruename' => $realname // 设置真实姓名
                         );
-                        
-                        $userId = $this->user->insertUser($userData);
-                        
-                        // 记录创建的用户信息（仅在调试模式下）
-                        if(HE)
-                        {
-                            $createInfo = [
-                                'time' => date('Y-m-d H:i:s'),
-                                'action' => '创建新用户',
-                                'username' => $casUsername,
-                                'userid' => $userId,
-                                'password' => '[已加密]' // 不记录实际密码
-                            ];
-                            file_put_contents(__DIR__ . '/../../../cas_user_create.log', json_encode($createInfo, JSON_PRETTY_PRINT) . "\n", FILE_APPEND);
-                        }
-                        
-                        // 重新获取完整的用户信息
+                        $this->user->insertUser($userData);
                         $user = $this->user->getUserByUserName($casUsername);
-                        
-                        // 确保用户创建成功
-                        if(!$user)
-                        {
-                            throw new \Exception("自动创建用户失败: " . $casUsername);
-                        }
                     }
                     else
                     {
                         $message = array(
                             'statusCode' => 300,
-                            "message" => "用户不存在，且未启用自动创建用户"
+                            "message" => "用户不存在"
                         );
                         \PHPEMS\ginkgo::R($message);
                         exit;
@@ -155,46 +133,17 @@ class action extends app
                     if(empty($user['usertruename']))
                     {
                         $this->user->modifyUserInfo($user['userid'], ['usertruename' => $realname]);
-                        
-                        // 更新后重新获取用户信息
-                        $user = $this->user->getUserById($user['userid']);
                     }
                     
                     // 如果有邮箱信息，检查是否需要更新
                     if(!empty($email) && (empty($user['useremail']) || $user['useremail'] == $casUsername . '@phpems.com'))
                     {
                         $this->user->modifyUserInfo($user['userid'], ['useremail' => $email]);
-                        
-                        // 更新后重新获取用户信息
-                        $user = $this->user->getUserById($user['userid']);
                     }
                 }
 
-                // 记录会话设置（仅在调试模式下）
-                if(HE)
-                {
-                    $sessionInfo = [
-                        'time' => date('Y-m-d H:i:s'),
-                        'action' => '设置会话',
-                        'username' => $user['username'],
-                        'userid' => $user['userid']
-                    ];
-                    file_put_contents(__DIR__ . '/../../../cas_session.log', json_encode($sessionInfo, JSON_PRETTY_PRINT) . "\n", FILE_APPEND);
-                }
-
                 // 设置用户会话
-                $this->session->setSessionUser(array(
-                    'sessionuserid' => $user['userid'],
-                    'sessionpassword' => $user['userpassword'],
-                    'sessionip' => $this->ev->getClientIp(),
-                    'sessiongroupid' => $user['usergroupid'],
-                    'sessionlogintime' => TIME,
-                    'sessionusername' => $user['username']
-                ));
-
-                // 确保会话已经保存
-                session_write_close();
-                session_start();
+                $this->session->setSessionUser(array('sessionuserid'=>$user['userid'],'sessionpassword'=>$user['userpassword'],'sessionip'=>$this->ev->getClientIp(),'sessiongroupid'=>$user['usergroupid'],'sessionlogintime'=>TIME,'sessionusername'=>$user['username']));
 
                 $message = array(
                     'statusCode' => 200,
