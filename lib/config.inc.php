@@ -23,7 +23,7 @@ define('OPENOSS',false);
 /**composer开关**/
 define('COMPOSER',1);
 /** 调试模式设置 */
-define('DEBUG',true);
+define('DEBUG',false);
 /** 数据库设置 */
 define('SQLDEBUG',0);
 define('DB','phpems');//MYSQL数据库名

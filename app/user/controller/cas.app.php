@@ -1,10 +1,36 @@
 <?php
 namespace PHPEMS;
 
+// 确保 Composer autoloader 在文件顶部加载
+require_once(__DIR__ . '/../../../vendor/autoload.php');
+
+// 引入 Monolog
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class action extends app
 {
+    private $log; // 添加一个日志记录器属性
+
+    // 初始化日志记录器
+    private function initLogger()
+    {
+        if (!$this->log) {
+            // 定义日志文件路径
+            $logPath = PEPATH . '/data/logs/cas.log';
+            // 创建 logger 实例
+            $this->log = new Logger('cas');
+            // 添加 handler，设置日志级别为 DEBUG 以记录所有信息
+            // 注意：在生产环境中，您可能希望将级别调整为 Logger::INFO 或更高
+            $this->log->pushHandler(new StreamHandler($logPath, Logger::DEBUG));
+        }
+    }
+
     public function display()
     {
+        // 在处理请求前初始化日志记录器
+        $this->initLogger();
+
         $action = $this->ev->url(3);
         if(!method_exists($this,$action))
             $action = "index";
@@ -23,6 +49,9 @@ class action extends app
         $baseUrl = $this->getBaseUrl();
         $serviceUrl = $baseUrl . '/index.php?user-app-cas';
 
+        // 记录服务URL（调试用） -> 使用 Monolog
+        $this->log->debug('CAS Service URL Info', ['baseUrl' => $baseUrl, 'serviceUrl' => $serviceUrl]);
+
         if(USECAS)
         {
             if(HE)
@@ -31,19 +60,9 @@ class action extends app
                 error_reporting(E_ALL);
             }
 
-            if(!file_exists(__DIR__ . '/../../../vendor/autoload.php'))
-            {
-                $message = array(
-                    'statusCode' => 300,
-                    "message" => "未找到Composer自动加载器，请先运行composer require jasig/phpcas"
-                );
-                \PHPEMS\ginkgo::R($message);
-                exit;
-            }
-
             try {
-                // 使用Composer的自动加载器
-                require_once(__DIR__ . '/../../../vendor/autoload.php');
+                // 使用Composer的自动加载器 - 这行需要删除，因为它已经在顶部加载
+                // require_once(__DIR__ . '/../../../vendor/autoload.php'); 
 
                 // 使用修复后的参数初始化CAS客户端
                 \phpCAS::client(CAS_VERSION_2_0, CAS_HOST, intval(CAS_PORT), CAS_CONTEXT, $baseUrl);
@@ -56,6 +75,8 @@ class action extends app
 
                 if(!\phpCAS::isAuthenticated())
                 {
+                    // 日志记录（调试用） -> 使用 Monolog
+                    $this->log->info('Attempting CAS authentication', ['serviceUrl' => $serviceUrl]);
                     \phpCAS::forceAuthentication();
                 }
 
@@ -87,42 +108,59 @@ class action extends app
                     $email = $casUsername . '@phpems.com';
                 }
                 
-                // 记录CAS认证成功的信息
-                if(HE)
-                {
-                    $logInfo = [
-                        'time' => date('Y-m-d H:i:s'),
-                        'username' => $casUsername,
-                        'attributes' => $attributes
-                    ];
-                    file_put_contents(__DIR__ . '/../../../cas_login_success.log', json_encode($logInfo, JSON_PRETTY_PRINT) . "\n", FILE_APPEND);
-                }
+                // 记录CAS认证成功的信息 -> 使用 Monolog
+                $this->log->info('CAS authentication successful', ['username' => $casUsername, 'attributes' => $attributes]);
 
                 $user = $this->user->getUserByUserName($casUsername);
+
+                $this->log->info('User get from database', ['user' => $user]);
                 if(!$user)
                 {
                     if(CAS_AUTO_CREATE_USER)
                     {
-                        // 生成随机密码
-                        $randomPassword = md5(uniqid(rand(), true));
+                        // 生成一个随机明文密码（不使用md5）
+                        $plainPassword = substr(uniqid(rand(), true), 0, 10);
                         
                         // 自动创建用户，使用从CAS获取的属性
                         $userData = array(
                             'username' => $casUsername,
                             'useremail' => $email,
-                            'userpassword' => $randomPassword,
+                            'userpassword' => md5($plainPassword), // 在这里进行md5哈希
                             'usergroupid' => 1, // 默认用户组
                             'usertruename' => $realname // 设置真实姓名
                         );
-                        $this->user->insertUser($userData);
-                        $user = $this->user->getUserByUserName($casUsername);
+                        
+                        $userId = $this->user->insertUser($userData);
+
+                        // 记录创建的用户信息（调试用） -> 使用 Monolog
+                        $this->log->info('New user created via CAS', [
+                            'username' => $casUsername,
+                            'userid' => $userId,
+                            'status' => 'Success'
+                        ]);
+                        
+                        // 直接使用插入的数据构建$user变量用于会话
+                        $user = $this->user->getUserById($userId);
+                        $this->log->info('user', ['user' => $user]);
+                        $user['userid'] = $userId; // 确保userId存在
+                        // usergroupid 已经在 $userData 中
+                        
+                        // 确保用户创建成功（检查userId）
+                        if(!$userId)
+                        {
+                            // 记录错误 -> 使用 Monolog
+                            $this->log->error('Failed to retrieve user info after creation', ['username' => $casUsername]);
+                            throw new \Exception("自动创建用户失败: " . $casUsername);
+                        }
                     }
                     else
                     {
                         $message = array(
                             'statusCode' => 300,
-                            "message" => "用户不存在"
+                            "message" => "用户不存在，且未启用自动创建用户"
                         );
+                        // 记录警告 -> 使用 Monolog
+                        $this->log->warning('User not found and auto-create disabled', ['username' => $casUsername]);
                         \PHPEMS\ginkgo::R($message);
                         exit;
                     }
@@ -133,17 +171,47 @@ class action extends app
                     if(empty($user['usertruename']))
                     {
                         $this->user->modifyUserInfo($user['userid'], ['usertruename' => $realname]);
+                        // 记录信息 -> 使用 Monolog
+                        $this->log->info('Updated user real name', ['userid' => $user['userid'], 'realname' => $realname]);
+                        // 更新后重新获取用户信息
+                        $user = $this->user->getUserById($user['userid']);
                     }
                     
                     // 如果有邮箱信息，检查是否需要更新
                     if(!empty($email) && (empty($user['useremail']) || $user['useremail'] == $casUsername . '@phpems.com'))
                     {
                         $this->user->modifyUserInfo($user['userid'], ['useremail' => $email]);
+                        // 记录信息 -> 使用 Monolog
+                        $this->log->info('Updated user email', ['userid' => $user['userid'], 'email' => $email]);
+                        // 更新后重新获取用户信息
+                        $user = $this->user->getUserById($user['userid']);
                     }
                 }
 
-                // 设置用户会话
-                $this->session->setSessionUser(array('sessionuserid'=>$user['userid'],'sessionpassword'=>$user['userpassword'],'sessionip'=>$this->ev->getClientIp(),'sessiongroupid'=>$user['usergroupid'],'sessionlogintime'=>TIME,'sessionusername'=>$user['username']));
+                // === 添加类型转换 ===
+                // 确保 userid 始终为整数类型，以保证日志和会话数据的一致性
+                $this->log->info('User info ready to set session', ['user' => $user]);
+                if (isset($user['userid'])) {
+                    $user['userid'] = (int) $user['userid'];
+                }
+                // === 结束类型转换 ===
+
+                // 记录会话设置（调试用） -> 使用 Monolog
+                $this->log->debug('Setting user session', ['username' => $user['username'], 'userid' => $user['userid']]);
+
+                // 设置用户会话 (现在 userid 应该是整数)
+                $this->session->setSessionUser(array(
+                    'sessionuserid' => $user['userid'],
+                    'sessionpassword' => $user['userpassword'],
+                    'sessionip' => $this->ev->getClientIp(),
+                    'sessiongroupid' => $user['usergroupid'],
+                    'sessionlogintime' => TIME,
+                    'sessionusername' => $user['username']
+                ));
+
+                // 确保会话已经保存
+                session_write_close();
+                // session_start(); // 移除或注释掉这一行
 
                 $message = array(
                     'statusCode' => 200,
@@ -152,28 +220,26 @@ class action extends app
                     "forwardUrl" => "index.php"
                 );
                 \PHPEMS\ginkgo::R($message);
-                exit;
+                // exit;
             } catch (\Exception $e) {
-                if(HE)
+                // 记录 CAS 认证错误 -> 使用 Monolog
+                $this->log->error('CAS Authentication Error', [
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString() // 记录完整的堆栈跟踪
+                ]);
+
+                if(HE) // 可以保留 HE 判断来决定是否在响应中显示详细错误
                 {
                     $message = array(
                         'statusCode' => 300,
-                        "message" => "CAS认证错误: " . $e->getMessage()
+                        "message" => "CAS认证错误: " . $e->getMessage() // 可以考虑只显示通用错误给用户
                     );
-                    
-                    // 记录CAS认证失败的信息
-                    $logInfo = [
-                        'time' => date('Y-m-d H:i:s'),
-                        'error' => $e->getMessage(),
-                        'trace' => $e->getTraceAsString()
-                    ];
-                    file_put_contents(__DIR__ . '/../../../cas_login_error.log', json_encode($logInfo, JSON_PRETTY_PRINT) . "\n", FILE_APPEND);
                 }
                 else
                 {
                     $message = array(
                         'statusCode' => 300,
-                        "message" => "CAS认证错误"
+                        "message" => "CAS认证错误" // 通用错误消息
                     );
                 }
                 \PHPEMS\ginkgo::R($message);
@@ -186,6 +252,8 @@ class action extends app
                 'statusCode' => 300,
                 "message" => "统一身份认证未开启"
             );
+            // 记录警告 -> 使用 Monolog
+            $this->log->warning('CAS is disabled but CAS endpoint accessed');
             \PHPEMS\ginkgo::R($message);
             exit;
         }
@@ -201,14 +269,19 @@ class action extends app
         
         // 构建基础URL和服务URL
         $baseUrl = $this->getBaseUrl();
-        $serviceUrl = $baseUrl . '/index.php';
+        // $serviceUrl = $baseUrl . '/index.php'; // 如果不调用CAS logout，这个可能不需要
         
         if(USECAS)
         {
+            // 记录本地登出事件 -> 使用 Monolog
+            $userId = $this->session->getSessionValue('sessionuserid'); // 尝试获取用户ID用于日志
+            $this->log->info('Local logout initiated', ['userid' => $userId ?? 'unknown']);
+
             // 清除本地会话
             $this->session->clearSessionUser();
             $_SESSION['openid'] = '';
-            
+
+            /* 注释掉CAS登出逻辑
             // 使用Composer的自动加载器
             require_once(__DIR__ . '/../../../vendor/autoload.php');
             
@@ -232,15 +305,22 @@ class action extends app
                     file_put_contents(__DIR__ . '/../../../cas_logout_error.log', json_encode($logInfo, JSON_PRETTY_PRINT) . "\n", FILE_APPEND);
                 }
                 
-                $message = array(
-                    'statusCode' => 200,
-                    "message" => "注销成功",
-                    "callbackType" => "forward",
-                    "forwardUrl" => "index.php"
-                );
-                \PHPEMS\ginkgo::R($message);
-                exit;
+                // 下面的消息和重定向移到外面
+                // $message = array(...);
+                // \PHPEMS\ginkgo::R($message);
+                // exit;
             }
+            */
+            
+            // 仅本地登出成功后，发送消息并重定向
+            $message = array(
+                'statusCode' => 200,
+                "message" => "本地注销成功", // 修改消息文本以反映实际情况
+                "callbackType" => "forward",
+                "forwardUrl" => "index.php"
+            );
+            \PHPEMS\ginkgo::R($message);
+            exit;
         }
         else
         {
@@ -248,6 +328,8 @@ class action extends app
                 'statusCode' => 300,
                 "message" => "统一身份认证未开启"
             );
+            // 记录警告 -> 使用 Monolog
+            $this->log->warning('CAS is disabled but logout endpoint accessed');
             \PHPEMS\ginkgo::R($message);
             exit;
         }
