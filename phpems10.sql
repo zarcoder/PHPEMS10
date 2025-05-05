@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80404 (8.4.4)
+ Source Server Version : 80403 (8.4.3)
  Source Host           : localhost:3306
- Source Schema         : phpems10
+ Source Schema         : phpems
 
  Target Server Type    : MySQL
- Target Server Version : 80404 (8.4.4)
+ Target Server Version : 80403 (8.4.3)
  File Encoding         : 65001
 
- Date: 21/03/2025 16:54:37
+ Date: 05/05/2025 18:34:49
 */
 
 SET NAMES utf8mb4;
@@ -168,7 +168,7 @@ CREATE TABLE `x2_attach` (
   KEY `attext` (`attext`,`attinputtime`) USING BTREE,
   KEY `attuserid` (`attuserid`) USING BTREE,
   KEY `attcntype` (`attcntype`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of x2_attach
@@ -186,6 +186,8 @@ INSERT INTO `x2_attach` (`attid`, `attpath`, `atttitle`, `attext`, `attinputtime
 INSERT INTO `x2_attach` (`attid`, `attpath`, `atttitle`, `attext`, `attinputtime`, `attsize`, `attmd5`, `attuserid`, `attcntype`) VALUES (10, 'files/attach/images/content/20250317/17421994777110.csv', '工作簿1.csv', 'csv', 1742199477, 1464, '', 1, 'text/csv');
 INSERT INTO `x2_attach` (`attid`, `attpath`, `atttitle`, `attext`, `attinputtime`, `attsize`, `attmd5`, `attuserid`, `attcntype`) VALUES (11, 'files/attach/images/content/20250317/17422001416027.csv', '工作簿1.csv', 'csv', 1742200141, 1402, '', 1, 'text/csv');
 INSERT INTO `x2_attach` (`attid`, `attpath`, `atttitle`, `attext`, `attinputtime`, `attsize`, `attmd5`, `attuserid`, `attcntype`) VALUES (12, 'files/attach/files/content/20250321/17425451413831.png', 'vector.png', 'png', 1742545141, 589986, '', 1, 'image/png');
+INSERT INTO `x2_attach` (`attid`, `attpath`, `atttitle`, `attext`, `attinputtime`, `attsize`, `attmd5`, `attuserid`, `attcntype`) VALUES (13, 'files/attach/images/content/20250504/17463495565758.png', '教师.png', 'png', 1746349556, 2211776, '', 1, 'image/png');
+INSERT INTO `x2_attach` (`attid`, `attpath`, `atttitle`, `attext`, `attinputtime`, `attsize`, `attmd5`, `attuserid`, `attcntype`) VALUES (14, 'files/attach/images/content/20250504/17463496398903.png', '学生.png', 'png', 1746349639, 1873707, '', 1, 'image/png');
 COMMIT;
 
 -- ----------------------------
@@ -244,8 +246,8 @@ CREATE TABLE `x2_basic` (
 -- Records of x2_basic
 -- ----------------------------
 BEGIN;
-INSERT INTO `x2_basic` (`basicid`, `basic`, `basicareaid`, `basicsubjectid`, `basicsection`, `basicknows`, `basicexam`, `basicapi`, `basicdemo`, `basicthumb`, `basicprice`, `basicclosed`, `basictop`, `basicdescribe`) VALUES (1, '计算机考试', 5, 1, 'a:1:{i:0;i:1;}', 'a:1:{i:1;a:2:{i:1;s:1:\"1\";i:2;s:1:\"2\";}}', 'a:16:{s:9:\"rulemodel\";s:1:\"0\";s:5:\"model\";s:1:\"2\";s:14:\"changesequence\";s:1:\"1\";s:4:\"auto\";s:3:\"1,2\";s:12:\"autotemplate\";s:15:\"exampaper_paper\";s:4:\"self\";s:1:\"3\";s:12:\"selftemplate\";s:10:\"exam_paper\";s:5:\"batch\";s:0:\"\";s:8:\"opentime\";a:2:{s:5:\"start\";i:1742198190;s:3:\"end\";i:1743325500;}s:10:\"selectrule\";s:1:\"0\";s:10:\"faceverify\";s:1:\"0\";s:10:\"fullsubmit\";s:1:\"0\";s:10:\"unjointime\";s:0:\"\";s:10:\"examnumber\";s:1:\"1\";s:12:\"notviewscore\";s:1:\"1\";s:10:\"allowgroup\";s:0:\"\";}', '', 1, 'files/attach/images/content/20250317/17421816583891.png', '1:1', 0, NULL, '本考场为PHPEMS系统演示考场');
-INSERT INTO `x2_basic` (`basicid`, `basic`, `basicareaid`, `basicsubjectid`, `basicsection`, `basicknows`, `basicexam`, `basicapi`, `basicdemo`, `basicthumb`, `basicprice`, `basicclosed`, `basictop`, `basicdescribe`) VALUES (38, '电子考试', 5, 2, '', '', '', '', 1, 'files/attach/images/content/20250317/17421855177163.png', '', 1, 0, '');
+INSERT INTO `x2_basic` (`basicid`, `basic`, `basicareaid`, `basicsubjectid`, `basicsection`, `basicknows`, `basicexam`, `basicapi`, `basicdemo`, `basicthumb`, `basicprice`, `basicclosed`, `basictop`, `basicdescribe`) VALUES (1, '计算机考试', 5, 1, 'a:1:{i:0;i:1;}', 'a:1:{i:1;a:2:{i:1;s:1:\"1\";i:2;s:1:\"2\";}}', 'a:16:{s:9:\"rulemodel\";s:1:\"0\";s:5:\"model\";s:1:\"2\";s:14:\"changesequence\";s:1:\"1\";s:4:\"auto\";s:3:\"1,2\";s:12:\"autotemplate\";s:15:\"exampaper_paper\";s:4:\"self\";s:1:\"3\";s:12:\"selftemplate\";s:10:\"exam_paper\";s:5:\"batch\";s:0:\"\";s:8:\"opentime\";a:2:{s:5:\"start\";i:1742198190;s:3:\"end\";i:1743325500;}s:10:\"selectrule\";s:1:\"0\";s:10:\"faceverify\";s:1:\"0\";s:10:\"fullsubmit\";s:1:\"0\";s:10:\"unjointime\";s:0:\"\";s:10:\"examnumber\";s:1:\"1\";s:12:\"notviewscore\";s:1:\"1\";s:10:\"allowgroup\";s:0:\"\";}', '', 1, 'files/attach/images/content/20250504/17463495565758.png', '1:1', 0, NULL, '本考场为PHPEMS系统演示考场');
+INSERT INTO `x2_basic` (`basicid`, `basic`, `basicareaid`, `basicsubjectid`, `basicsection`, `basicknows`, `basicexam`, `basicapi`, `basicdemo`, `basicthumb`, `basicprice`, `basicclosed`, `basictop`, `basicdescribe`) VALUES (38, '电子考试', 5, 2, '', '', '', '', 1, 'files/attach/images/content/20250504/17463496398903.png', '', 0, 0, '');
 COMMIT;
 
 -- ----------------------------
@@ -5967,7 +5969,12 @@ CREATE TABLE `x2_session` (
 -- Records of x2_session
 -- ----------------------------
 BEGIN;
-INSERT INTO `x2_session` (`sessionid`, `sessionuserid`, `sessionusername`, `sessionpassword`, `sessionip`, `sessionmanage`, `sessiongroupid`, `sessioncurrent`, `sessionrandcode`, `sessionlogintime`, `sessiontimelimit`, `sessionlasttime`, `sessionmaster`) VALUES ('f15aab24c2ddcedb856c80bb03ed8938', 1, 'peadmin', '244153a2599be7685c32d2281f57ae67', '::1', 0, 1, '1', '', 1742543995, 1742543995, 1742546979, 0);
+INSERT INTO `x2_session` (`sessionid`, `sessionuserid`, `sessionusername`, `sessionpassword`, `sessionip`, `sessionmanage`, `sessiongroupid`, `sessioncurrent`, `sessionrandcode`, `sessionlogintime`, `sessiontimelimit`, `sessionlasttime`, `sessionmaster`) VALUES ('a0b4abfa4643e3ff9c432e9db7e27ffc', 0, '', '', '::1', 0, 0, '', '', 0, 1746441268, 1746441268, 0);
+INSERT INTO `x2_session` (`sessionid`, `sessionuserid`, `sessionusername`, `sessionpassword`, `sessionip`, `sessionmanage`, `sessiongroupid`, `sessioncurrent`, `sessionrandcode`, `sessionlogintime`, `sessiontimelimit`, `sessionlasttime`, `sessionmaster`) VALUES ('869d1f14628a23dd64d6e87b8a5a8182', 0, '', '', '::1', 0, 0, '', '', 0, 1746284378, 1746284378, 0);
+INSERT INTO `x2_session` (`sessionid`, `sessionuserid`, `sessionusername`, `sessionpassword`, `sessionip`, `sessionmanage`, `sessiongroupid`, `sessioncurrent`, `sessionrandcode`, `sessionlogintime`, `sessiontimelimit`, `sessionlasttime`, `sessionmaster`) VALUES ('e6a1ca63dd16582048ca9f205448407f', 0, '', '', '::1', 0, 0, '', '', 0, 1746284460, 1746284460, 0);
+INSERT INTO `x2_session` (`sessionid`, `sessionuserid`, `sessionusername`, `sessionpassword`, `sessionip`, `sessionmanage`, `sessiongroupid`, `sessioncurrent`, `sessionrandcode`, `sessionlogintime`, `sessiontimelimit`, `sessionlasttime`, `sessionmaster`) VALUES ('b06331ae8d93f8669a571f7bfdfcd2f9', 0, '', '', '::1', 0, 0, '', '', 0, 1746285085, 1746285085, 0);
+INSERT INTO `x2_session` (`sessionid`, `sessionuserid`, `sessionusername`, `sessionpassword`, `sessionip`, `sessionmanage`, `sessiongroupid`, `sessioncurrent`, `sessionrandcode`, `sessionlogintime`, `sessiontimelimit`, `sessionlasttime`, `sessionmaster`) VALUES ('9d4deed655e863b13584e2ac87fec216', 0, '', '', '::1', 0, 0, '', '', 0, 1746285099, 1746285099, 0);
+INSERT INTO `x2_session` (`sessionid`, `sessionuserid`, `sessionusername`, `sessionpassword`, `sessionip`, `sessionmanage`, `sessiongroupid`, `sessioncurrent`, `sessionrandcode`, `sessionlogintime`, `sessiontimelimit`, `sessionlasttime`, `sessionmaster`) VALUES ('5f74cced09571b4ceebef4ff416514d4', 56, '00009371', '126525e7bd796cb7b25ea9c6a55c973b', '::1', 0, 1, '', '', 1746285215, 1746285215, 1746285215, 0);
 COMMIT;
 
 -- ----------------------------
@@ -6106,6 +6113,8 @@ CREATE TABLE `x2_user` (
   `useranswer` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
   `manager_apps` varchar(240) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `usertruename` varchar(24) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
+  `unit_id` varchar(50) DEFAULT NULL COMMENT '单位ID (来自CAS)',
+  `unit_name` varchar(255) DEFAULT NULL COMMENT '单位名称 (来自CAS)',
   `normal_favor` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
   `teacher_subjects` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `userprofile` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
@@ -6125,16 +6134,15 @@ CREATE TABLE `x2_user` (
   KEY `useropenid` (`useropenid`) USING BTREE,
   KEY `userphone` (`userphone`) USING BTREE,
   KEY `userunionid` (`userunionid`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of x2_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `x2_user` (`userid`, `useropenid`, `userunionid`, `username`, `useremail`, `userpassword`, `usercoin`, `userregip`, `userregtime`, `userlogtime`, `userverifytime`, `usergroupid`, `usermoduleid`, `useranswer`, `manager_apps`, `usertruename`, `normal_favor`, `teacher_subjects`, `userprofile`, `usergender`, `userphone`, `useraddress`, `userphoto`, `userstatus`, `normal_sfz`) VALUES (1, '', NULL, 'peadmin', '958074@163.com', '244153a2599be7685c32d2281f57ae67', 269, '127.0.0.1', 1471795200, 0, NULL, 1, 0, NULL, 'a:7:{i:0;s:4:\"user\";i:1;s:7:\"content\";i:2;s:4:\"exam\";i:3;s:8:\"document\";i:4;s:6:\"course\";i:5;s:4:\"bank\";i:6;s:8:\"autoform\";}', '刘小锋', '', '', '', '男', '', '信息部', 'files/attach/images/content/20250317/17421823416572.jpg', 3, '');
-INSERT INTO `x2_user` (`userid`, `useropenid`, `userunionid`, `username`, `useremail`, `userpassword`, `usercoin`, `userregip`, `userregtime`, `userlogtime`, `userverifytime`, `usergroupid`, `usermoduleid`, `useranswer`, `manager_apps`, `usertruename`, `normal_favor`, `teacher_subjects`, `userprofile`, `usergender`, `userphone`, `useraddress`, `userphoto`, `userstatus`, `normal_sfz`) VALUES (2, '', NULL, '教师管理员', '958074@126.com', '96e79218965eb72c92a549dd5a330112', 98, '127.0.0.1', 1471795200, 0, NULL, 9, 0, NULL, '', '213123', '', 'a:14:{i:0;s:2:\"13\";i:1;s:2:\"12\";i:2;s:1:\"5\";i:3;s:1:\"4\";i:4;s:1:\"3\";i:5;s:1:\"1\";i:6;s:1:\"2\";i:7;s:2:\"17\";i:8;s:2:\"15\";i:9;s:2:\"16\";i:10;s:2:\"18\";i:11;s:2:\"19\";i:12;s:2:\"20\";i:13;s:2:\"21\";}', '77777', '', '', '', '', 3, '');
-INSERT INTO `x2_user` (`userid`, `useropenid`, `userunionid`, `username`, `useremail`, `userpassword`, `usercoin`, `userregip`, `userregtime`, `userlogtime`, `userverifytime`, `usergroupid`, `usermoduleid`, `useranswer`, `manager_apps`, `usertruename`, `normal_favor`, `teacher_subjects`, `userprofile`, `usergender`, `userphone`, `useraddress`, `userphoto`, `userstatus`, `normal_sfz`) VALUES (3, '', '', 'cs-teacher', 'cs-teacher@mail.neu.edu.cn', 'f5fa9f9d2821d0a5b22d5d5f7222b560', 0, '::1', 1742187898, 0, 0, 9, 0, '', '', '', '', '', '', '', '', '', '', 0, '');
-INSERT INTO `x2_user` (`userid`, `useropenid`, `userunionid`, `username`, `useremail`, `userpassword`, `usercoin`, `userregip`, `userregtime`, `userlogtime`, `userverifytime`, `usergroupid`, `usermoduleid`, `useranswer`, `manager_apps`, `usertruename`, `normal_favor`, `teacher_subjects`, `userprofile`, `usergender`, `userphone`, `useraddress`, `userphoto`, `userstatus`, `normal_sfz`) VALUES (4, '', '', 'eie-teacher', 'eie-teacher@mail.neu.edu.cn', '594d77df9e1e9364f078fcbedcf97aed', 0, '::1', 1742187927, 0, 1742187966, 9, 0, '', '', 'zarcoder', '', '', '', '', '', '', 'files/public/img/noimage.gif', 3, '');
+INSERT INTO `x2_user` (`userid`, `useropenid`, `userunionid`, `username`, `useremail`, `userpassword`, `usercoin`, `userregip`, `userregtime`, `userlogtime`, `userverifytime`, `usergroupid`, `usermoduleid`, `useranswer`, `manager_apps`, `usertruename`, `unit_id`, `unit_name`, `normal_favor`, `teacher_subjects`, `userprofile`, `usergender`, `userphone`, `useraddress`, `userphoto`, `userstatus`, `normal_sfz`) VALUES (1, '', NULL, 'peadmin', '958074@163.com', '9672b6283f722948f3dfadb7e1d45ecf', 269, '127.0.0.1', 1471795200, 0, NULL, 1, 0, NULL, 'a:7:{i:0;s:4:\"user\";i:1;s:7:\"content\";i:2;s:4:\"exam\";i:3;s:8:\"document\";i:4;s:6:\"course\";i:5;s:4:\"bank\";i:6;s:8:\"autoform\";}', '刘小锋', NULL, NULL, '', '', '', '男', '', '信息部', 'files/attach/images/content/20250317/17421823416572.jpg', 3, '');
+INSERT INTO `x2_user` (`userid`, `useropenid`, `userunionid`, `username`, `useremail`, `userpassword`, `usercoin`, `userregip`, `userregtime`, `userlogtime`, `userverifytime`, `usergroupid`, `usermoduleid`, `useranswer`, `manager_apps`, `usertruename`, `unit_id`, `unit_name`, `normal_favor`, `teacher_subjects`, `userprofile`, `usergender`, `userphone`, `useraddress`, `userphoto`, `userstatus`, `normal_sfz`) VALUES (2, '', NULL, '教师管理员', '958074@126.com', '9672b6283f722948f3dfadb7e1d45ecf', 98, '127.0.0.1', 1471795200, 0, NULL, 9, 0, NULL, '', '213123', NULL, NULL, '', 'a:14:{i:0;s:2:\"13\";i:1;s:2:\"12\";i:2;s:1:\"5\";i:3;s:1:\"4\";i:4;s:1:\"3\";i:5;s:1:\"1\";i:6;s:1:\"2\";i:7;s:2:\"17\";i:8;s:2:\"15\";i:9;s:2:\"16\";i:10;s:2:\"18\";i:11;s:2:\"19\";i:12;s:2:\"20\";i:13;s:2:\"21\";}', '77777', '', '', '', '', 3, '');
+INSERT INTO `x2_user` (`userid`, `useropenid`, `userunionid`, `username`, `useremail`, `userpassword`, `usercoin`, `userregip`, `userregtime`, `userlogtime`, `userverifytime`, `usergroupid`, `usermoduleid`, `useranswer`, `manager_apps`, `usertruename`, `unit_id`, `unit_name`, `normal_favor`, `teacher_subjects`, `userprofile`, `usergender`, `userphone`, `useraddress`, `userphoto`, `userstatus`, `normal_sfz`) VALUES (58, '', '', '00009371', 'liuxf@mail.neu.edu.cn', '23469f40b1851b59942b40d4e160fd16', 0, '::1', 1746441119, 0, 0, 14, 0, '', '', '刘小锋', '021900', '计算机科学与工程学院', '', '', '', '', '', '', '', 0, '');
 COMMIT;
 
 -- ----------------------------
@@ -6153,7 +6161,7 @@ CREATE TABLE `x2_user_group` (
   KEY `groupname` (`groupname`,`groupmoduleid`) USING BTREE,
   KEY `groupmoduledefault` (`groupmoduledefault`) USING BTREE,
   KEY `groupdefault` (`groupdefault`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of x2_user_group
@@ -6162,8 +6170,9 @@ BEGIN;
 INSERT INTO `x2_user_group` (`groupid`, `groupname`, `groupmoduleid`, `groupdescribe`, `groupright`, `groupmoduledefault`, `groupdefault`) VALUES (1, '管理员', 1, '管理员', '', 1, 0);
 INSERT INTO `x2_user_group` (`groupid`, `groupname`, `groupmoduleid`, `groupdescribe`, `groupright`, `groupmoduledefault`, `groupdefault`) VALUES (8, '普通用户', 9, '普通用户', '', 0, 1);
 INSERT INTO `x2_user_group` (`groupid`, `groupname`, `groupmoduleid`, `groupdescribe`, `groupright`, `groupmoduledefault`, `groupdefault`) VALUES (9, '教师', 12, '教师', '', 0, 0);
-INSERT INTO `x2_user_group` (`groupid`, `groupname`, `groupmoduleid`, `groupdescribe`, `groupright`, `groupmoduledefault`, `groupdefault`) VALUES (10, '计算机专业学生组', 9, '计算机专业学生组', '', 0, 0);
-INSERT INTO `x2_user_group` (`groupid`, `groupname`, `groupmoduleid`, `groupdescribe`, `groupright`, `groupmoduledefault`, `groupdefault`) VALUES (11, '通信电子学生组', 9, '通信电子学生组', '', 0, 0);
+INSERT INTO `x2_user_group` (`groupid`, `groupname`, `groupmoduleid`, `groupdescribe`, `groupright`, `groupmoduledefault`, `groupdefault`) VALUES (13, '研究生组', 9, '研究生组', '', 0, 0);
+INSERT INTO `x2_user_group` (`groupid`, `groupname`, `groupmoduleid`, `groupdescribe`, `groupright`, `groupmoduledefault`, `groupdefault`) VALUES (12, '本科生组', 9, '本科学生组', '', 0, 0);
+INSERT INTO `x2_user_group` (`groupid`, `groupname`, `groupmoduleid`, `groupdescribe`, `groupright`, `groupmoduledefault`, `groupdefault`) VALUES (14, '教师组', 9, '教师组', '', 0, 0);
 COMMIT;
 
 -- ----------------------------

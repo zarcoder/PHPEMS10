@@ -108,8 +108,42 @@ class action extends app
                     $email = $casUsername . '@phpems.com';
                 }
                 
+                // === 新增：获取单位 ID 和名称 ===
+                $unit_id = '';
+                $unit_name = '';
+                if (\phpCAS::hasAttribute('UNIT_UID')) { $unit_id = \phpCAS::getAttribute('UNIT_UID'); }
+                if (\phpCAS::hasAttribute('UNIT_NAME')) { $unit_name = \phpCAS::getAttribute('UNIT_NAME'); }
+                // === 结束新增 ===
+
+                // === 新增：获取并处理 ID_TYPE ===
+                $id_type = '';
+                if (\phpCAS::hasAttribute('ID_TYPE')) {
+                    $id_type = \phpCAS::getAttribute('ID_TYPE');
+                }
+                // 根据 ID_TYPE 确定用户组 ID
+                $target_group_id = 1; // 默认用户组 ID
+                switch ($id_type) {
+                    case '1':
+                        $target_group_id = 12;
+                        break;
+                    case '2':
+                        $target_group_id = 13;
+                        break;
+                    case '3':
+                        $target_group_id = 14;
+                        break;
+                    // default: 保持 $target_group_id 为 1
+                }
+                // === 结束新增 ===
+
                 // 记录CAS认证成功的信息 -> 使用 Monolog
-                $this->log->info('CAS authentication successful', ['username' => $casUsername, 'attributes' => $attributes]);
+                // 在日志中也加入单位信息
+                $this->log->info('CAS authentication successful', [
+                    'username' => $casUsername,
+                    'attributes' => $attributes,
+                    'extracted_unit_id' => $unit_id,
+                    'extracted_unit_name' => $unit_name
+                ]);
 
                 $user = $this->user->getUserByUserName($casUsername);
 
@@ -126,8 +160,10 @@ class action extends app
                             'username' => $casUsername,
                             'useremail' => $email,
                             'userpassword' => md5($plainPassword), // 在这里进行md5哈希
-                            'usergroupid' => 1, // 默认用户组
-                            'usertruename' => $realname // 设置真实姓名
+                            'usergroupid' => $target_group_id, // 使用根据 ID_TYPE 确定的组ID
+                            'usertruename' => $realname, // 设置真实姓名
+                            'unit_id' => $unit_id, // 添加单位ID
+                            'unit_name' => $unit_name, // 添加单位名称
                         );
                         
                         $userId = $this->user->insertUser($userData);
@@ -136,6 +172,8 @@ class action extends app
                         $this->log->info('New user created via CAS', [
                             'username' => $casUsername,
                             'userid' => $userId,
+                            'assigned_groupid' => $target_group_id, // 添加分配的组ID
+                            'cas_id_type' => $id_type, // 添加CAS返回的ID_TYPE
                             'status' => 'Success'
                         ]);
                         
@@ -187,6 +225,44 @@ class action extends app
                         $user = $this->user->getUserById($user['userid']);
                     }
                 }
+
+                // === 新增：检查并更新单位信息 ===
+                $updateData = []; // 用于收集需要更新的数据
+
+                // 更新真实姓名 (逻辑保持不变)
+                if (!empty($realname) && $realname != $casUsername && empty($user['usertruename'])) {
+                    $updateData['usertruename'] = $realname;
+                }
+
+                // 更新邮箱 (逻辑保持不变)
+                if (!empty($email) && (empty($user['useremail']) || $user['useremail'] == $casUsername . '@phpems.com')) {
+                    $updateData['useremail'] = $email;
+                }
+
+                // 新增：检查并更新单位ID
+                // 如果 CAS 提供了 unit_id 并且本地记录为空，或者与本地记录不同，则更新
+                if (!empty($unit_id) && (!isset($user['unit_id']) || empty($user['unit_id']) || $user['unit_id'] != $unit_id)) {
+                    $updateData['unit_id'] = $unit_id;
+                }
+
+                // 新增：检查并更新单位名称
+                // 如果 CAS 提供了 unit_name 并且本地记录为空，或者与本地记录不同，则更新
+                if (!empty($unit_name) && (!isset($user['unit_name']) || empty($user['unit_name']) || $user['unit_name'] != $unit_name)) {
+                    $updateData['unit_name'] = $unit_name;
+                }
+
+                // 如果有需要更新的数据，则执行更新操作
+                if (!empty($updateData)) {
+                    $this->user->modifyUserInfo($user['userid'], $updateData);
+                    // 记录更新信息
+                    $this->log->info('Updated existing user info via CAS', [
+                        'userid' => $user['userid'],
+                        'updated_fields' => array_keys($updateData)
+                    ]);
+                    // 更新后重新获取完整的用户信息
+                    $user = $this->user->getUserById($user['userid']);
+                }
+                // === 结束修改 ===
 
                 // === 添加类型转换 ===
                 // 确保 userid 始终为整数类型，以保证日志和会话数据的一致性
