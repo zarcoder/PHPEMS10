@@ -25,8 +25,7 @@ CKEDITOR.editorConfig = function( config ) {
 	];
 	
 	config.extraPlugins = 'mathjax,music,wikititle,lineheight,video';
-	//config.mathJaxLib = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML';
-    config.mathJaxLib = 'files/public/js/ckeditor/js/mathjax/MathJax.js?config=TeX-AMS_HTML';
+    config.mathJaxLib = 'files/public/js/ckeditor/js/mathjax/MathJax.js?config=TeX-AMS_SVG';
 	CKEDITOR.config.contentsCss = ['files/public/css/bootstrap.css','files/public/css/pe.master.css','files/public/js/ckeditor/ckeditor.css'];
 	config.allowedContent = true;
 };

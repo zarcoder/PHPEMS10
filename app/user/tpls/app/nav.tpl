@@ -34,12 +34,14 @@
 					</a>
 				</li>
 				<li>|</li>
+				{x2;if:defined('SHOWREGISTER') && SHOWREGISTER}
 				<li>
 					<a href="index.php?user-app-register" class="menu">
 						注册
 					</a>
 				</li>
 				<li>|</li>
+				{x2;endif}
 				<li>
 					<a href="index.php?user-app-register-findpassword" class="menu">
 						忘记密码

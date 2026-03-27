@@ -138,7 +138,7 @@
 {x2;if:!$userhash}
     </div>
 </div>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="files/public/js/jweixin-1.0.0.js"></script>
 <script>
 	wx.config({
         debug: false,

@@ -37,16 +37,18 @@
 										</div>
 									</label>
 								</div>
-                                {x2;if:$app['appsetting']['emailverify']}
-								<div class="form-group text-right">
-									<a href="index.php?user-app-register-findpassword">忘记密码？</a>
-								</div>
-								{x2;endif}
 								<div class="form-group text-center">
 									<button class="btn btn-primary login">登录</button>
 									<input type="hidden" value="1" name="userlogin"/>
+									{x2;if:defined('SHOWREGISTER') && SHOWREGISTER}
 									<a href="index.php?user-app-register" class="btn btn-default login">注册</a>
+									{x2;endif}
 								</div>
+								{x2;if:defined('USECAS') && USECAS}
+								<div class="form-group text-center" style="margin-top:10px;">
+									<a href="index.php?user-app-cas" class="btn btn-info login">统一身份认证登录</a>
+								</div>
+								{x2;endif}
 							</fieldset>
 						</form>
 					</div>

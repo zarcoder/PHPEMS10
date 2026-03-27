@@ -97,7 +97,7 @@
 		</div>
 	</div>
 	{x2;if:$order['orderstatus'] == 1}
-	<script src="https://res.wx.qq.com/open/js/jweixin-1.3.0.js"></script>
+	<script src="files/public/js/jweixin-1.3.0.js"></script>
 	<script>
 		function goorderlist()
 		{

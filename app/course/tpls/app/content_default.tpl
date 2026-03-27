@@ -44,17 +44,6 @@
 						</div>
 						<p class="text-right">发布时间：{x2;date:$content['courseinputtime'],'Y-m-d'}</p>
 						<div  style="margin-top:20px;border-top:1px solid #dddddd;padding-top:20px;">
-							<div class="bshare-custom pull-right">
-								<a class="bshare-qzone" title="分享到QQ空间"></a>
-								<a class="bshare-sinaminiblog" title="分享到新浪微博"></a>
-								<a class="bshare-renren" title="分享到人人网"></a>
-								<a class="bshare-qqmb" title="分享到腾讯微博"></a>
-								<a class="bshare-neteasemb" title="分享到网易微博"></a>
-								<a class="bshare-more bshare-more-icon more-style-addthis" title="更多平台"></a>
-								<span class="BSHARE_COUNT bshare-share-count">0</span>
-							</div>
-							<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
-							<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
 						</div>
 					</div>
 				</div>
